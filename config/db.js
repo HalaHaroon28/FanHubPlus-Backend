@@ -25,18 +25,16 @@ const seedAdminUser = async () => {
   }
 };
 
-const connectDB = async () => {
-  try {
-    const conn = await mongoose.connect(process.env.MONGO_URI, {
-      serverSelectionTimeoutMS: 5000,
-      socketTimeoutMS: 45000,
-      maxPoolSize: 10,
-    });
-    console.log(`MongoDB Connected: ${conn.connection.host}`);
-    await seedAdminUser();
-  } catch (error) {
-    console.error(`Database Connection Error: ${error.message}`);
-  }
+
+let isConnected = false;
+
+export const connectDB = async () => {
+  if (isConnected) return;
+
+  const conn = await mongoose.connect(process.env.MONGO_URI);
+
+  isConnected = conn.connections[0].readyState === 1;
+
+  console.log("MongoDB Connected");
 };
 
-export default connectDB;

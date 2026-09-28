@@ -23,7 +23,9 @@ import chatRoutes from './routes/chatRoutes.js';
 
 dotenv.config();
 
-connectDB();
+const connectDB = async () => {
+  const conn = await mongoose.connect(process.env.MONGO_URI);
+};
 
 const app = express();
 
@@ -53,4 +55,4 @@ const PORT = process.env.PORT || 5000;
 
 app.listen(PORT, () => {
   console.log(`Server running on port ${PORT}`);
-});
+});
