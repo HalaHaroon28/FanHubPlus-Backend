@@ -28,13 +28,16 @@ const seedAdminUser = async () => {
 
 let isConnected = false;
 
-export const connectDB = async () => {
+const connectDB = async () => {
   if (isConnected) return;
 
   const conn = await mongoose.connect(process.env.MONGO_URI);
 
   isConnected = conn.connections[0].readyState === 1;
 
+  await seedAdminUser();
+
   console.log("MongoDB Connected");
 };
 
+export default connectDB;

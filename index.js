@@ -23,9 +23,8 @@ import chatRoutes from './routes/chatRoutes.js';
 
 dotenv.config();
 
-const connectDB = async () => {
-  const conn = await mongoose.connect(process.env.MONGO_URI);
-};
+
+await connectDB();
 
 const app = express();
 
